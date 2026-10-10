@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thales - Controle de Equipamentos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        
+        /* Estilização do Título estilo Thales */
+        .thales-title {
+            text-align: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 12px;
+            color: #000000;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .thales-subtitle {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #00a3e0;
+            margin-top: 5px;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; margin-top: 5px; }
+        button:hover { background-color: #218838; }
+        .btn-editar { background-color: #ffc107; color: black; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; margin-right: 5px; width: auto; font-size: 14px; }
+        .btn-editar:hover { background-color: #e0a800; }
+        .btn-apagar { background-color: #dc3545; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; width: auto; font-size: 14px; }
+        .btn-apagar:hover { background-color: #c82333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="thales-title">
+        THALES
+        <span class="thales-subtitle">INFORMATION SYSTEMS</span>
+    </h1>
+
+    <input type="hidden" id="editId" value="">
+
+    <div class="form-group">
+        <label for="nome">Nome do Equipamento:</label>
+        <input type="text" id="nome" placeholder="Ex: Computador Dell">
+    </div>
+    
+    <div class="form-group">
+        <label for="categoria">Categoria:</label>
+        <input type="text" id="categoria" placeholder="Ex: TI, Ferramentas">
+    </div>
+    
+    <div class="form-group">
+        <label for="status">Status:</label>
+        <select id="status">
+            <option value="Disponível">Disponível</option>
+            <option value="Em uso">Em uso</option>
+            <option value="Manutenção">Manutenção</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="responsavel">Responsável:</label>
+        <input type="text" id="responsavel" placeholder="Deixe vazio se indisponível">
+    </div>
+
+    <button id="btnSalvar" onclick="salvarEquipamento()">Adicionar Equipamento</button>
+
+    <h2>Lista de Equipamentos</h2>
+    <table id="tabelaEquipamentos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Status</th>
+                <th>Responsável</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Os dados da nuvem aparecem aqui automaticamente -->
+        </tbody>
+    </table>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
