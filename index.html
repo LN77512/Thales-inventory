@@ -3,181 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thales - Controle de Equipamentos</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        
-        /* Estilização do Título estilo Thales */
-        .thales-title {
-            text-align: center;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 36px;
-            font-weight: 900;
-            letter-spacing: 12px;
-            color: #000000;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-        }
-
-        .thales-subtitle {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 4px;
-            color: #00a3e0;
-            margin-top: 5px;
-        }
-
-        /* Estilo da Tela de Login */
-        #loginOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .login-card {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            width: 320px;
-            text-align: center;
-        }
-        .login-card p {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .form-group { margin-bottom: 15px; text-align: left; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; color: #333; }
-        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        button { background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; margin-top: 5px; }
-        button:hover { background-color: #218838; }
-        .btn-editar { background-color: #ffc107; color: black; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; margin-right: 5px; width: auto; font-size: 14px; }
-        .btn-editar:hover { background-color: #e0a800; }
-        .btn-apagar { background-color: #dc3545; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; width: auto; font-size: 14px; }
-        .btn-apagar:hover { background-color: #c82333; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #007bff; color: white; }
-    </style>
+    <title>THALES - Information Systems</title>
+    <!-- SDK Oficial do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Tela de Login -->
-<div id="loginOverlay">
-    <div class="login-card">
-        <h1 class="thales-title" style="font-size: 20px; letter-spacing: 5px; margin-bottom: 10px;">
-            THALES
-            <span class="thales-subtitle" style="font-size: 8px; letter-spacing: 2px;">INFORMATION SYSTEMS</span>
-        </h1>
-        <p>Insira suas credenciais para aceder</p>
+    <!-- Tela de Login Overlay -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>THALES</h2>
+            <p>INFORMATION SYSTEMS</p>
+            <p class="login-subtitle">Insira suas credenciais para aceder</p>
+            
+            <label for="usuarioInput">Nome de Utilizador / E-mail:</label>
+            <input type="email" id="usuarioInput" placeholder="ex: thales@empresa.com">
+
+            <label for="senhaInput">Palavra-passe:</label>
+            <input type="password" id="senhaInput" placeholder="********">
+
+            <button onclick="fazerLogin()">Entrar</button>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal do Inventário -->
+    <div class="container">
+        <h1>THALES</h1>
+        <h2>INFORMATION SYSTEMS</h2>
+
+        <div class="form-group">
+            <label>Nome do Equipamento:</label>
+            <input type="text" id="nomeEquipamento" placeholder="Ex: Computador Dell">
+            
+            <label>Categoria:</label>
+            <input type="text" id="categoriaEquipamento" placeholder="Ex: TI, Ferramentas">
+            
+            <label>Status:</label>
+            <select id="statusEquipamento">
+                <option value="Disponível">Disponível</option>
+                <option value="Em uso">Em uso</option>
+                <option value="Manutenção">Manutenção</option>
+            </select>
+            
+            <label>Responsável:</label>
+            <input type="text" id="responsavelEquipamento" placeholder="Deixe vazio se indisponível">
+
+            <button onclick="adicionarEquipamento()" class="btn-add">Adicionar Equipamento</button>
+        </div>
+
+        <h3>Lista de Equipamentos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Status</th>
+                    <th>Responsável</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaEquipamentos">
+                <!-- Os dados entram aqui dinamicamente -->
+            </tbody>
+        </table>
         
-        <div class="form-group">
-            <label for="usuarioLogin">Nome de Utilizador:</label>
-            <input type="text" id="usuarioLogin" placeholder="Ex: Thales">
+        <!-- Botão de Sair (Logout) -->
+        <div style="margin-top: 30px; text-align: right;">
+            <button onclick="fazerLogout()" style="background-color: #d9534f; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Sair da Conta</button>
         </div>
-
-        <div class="form-group">
-            <label for="senhaLogin">Palavra-passe:</label>
-            <input type="password" id="senhaLogin" placeholder="********" onkeypress="verificarEnter(event)">
-        </div>
-
-        <button onclick="verificarLogin()">Entrar</button>
-    </div>
-</div>
-
-<div class="container">
-    <h1 class="thales-title">
-        THALES
-        <span class="thales-subtitle">INFORMATION SYSTEMS</span>
-    </h1>
-
-    <input type="hidden" id="editId" value="">
-
-    <div class="form-group">
-        <label for="nome">Nome do Equipamento:</label>
-        <input type="text" id="nome" placeholder="Ex: Computador Dell">
-    </div>
-    
-    <div class="form-group">
-        <label for="categoria">Categoria:</label>
-        <input type="text" id="categoria" placeholder="Ex: TI, Ferramentas">
-    </div>
-    
-    <div class="form-group">
-        <label for="status">Status:</label>
-        <select id="status">
-            <option value="Disponível">Disponível</option>
-            <option value="Em uso">Em uso</option>
-            <option value="Manutenção">Manutenção</option>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label for="responsavel">Responsável:</label>
-        <input type="text" id="responsavel" placeholder="Deixe vazio se indisponível">
     </div>
 
-    <button id="btnSalvar" onclick="salvarEquipamento()">Adicionar Equipamento</button>
-
-    <h2>Lista de Equipamentos</h2>
-    <table id="tabelaEquipamentos">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Categoria</th>
-                <th>Status</th>
-                <th>Responsável</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Os dados da nuvem aparecem aqui automaticamente -->
-        </tbody>
-    </table>
-</div>
-
-<script>
-    // Lógica de autenticação com utilizador e senha específicos
-    function verificarLogin() {
-        const usuarioCorreto = "Thales";
-        const senhaCorreta = "@Thales2026!";
-
-        const usuarioDigitado = document.getElementById("usuarioLogin").value;
-        const senhaDigitada = document.getElementById("senhaLogin").value;
-
-        if (usuarioDigitado === usuarioCorreto && senhaDigitada === senhaCorreta) {
-            document.getElementById("loginOverlay").style.display = "none";
-            localStorage.setItem("thales_autenticado", "true");
-        } else {
-            alert("Nome de utilizador ou senha incorretos! Tente novamente.");
-            document.getElementById("senhaLogin").value = "";
-        }
-    }
-
-    function verificarEnter(event) {
-        if (event.key === "Enter") {
-            verificarLogin();
-        }
-    }
-
-    // Se o utilizador já tiver colocado os dados corretos nesta sessão, mantém aberto
-    window.onload = function() {
-        if (localStorage.getItem("thales_autenticado") === "true") {
-            document.getElementById("loginOverlay").style.display = "none";
-        }
-    };
-</script>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
