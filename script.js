@@ -1,6 +1,6 @@
-// Configuração do Supabase (URL e Chave corrigidos)
+// Configuração do Supabase (URL e Chave Corretos)
 const SUPABASE_URL = 'https://kthvsbhubmerufrtzpf.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_3Ck_k8g01wPQJiHB2PG4sQ_VetmQ...'; // Cole aqui a sua Publishable Key completa se esta estiver cortada
+const SUPABASE_ANON_KEY = 'sb_publishable_3Ck_k8g01wPQJiHB2PG4sQ_VetmQfMK';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -38,9 +38,6 @@ async function fazerLogin() {
         carregarEquipamentos();
     }
 }
-
-// Para verificar se o login foi efetuado:
-// Abra o site e insira thalesgroup@gmail.com e a sua palavra-passe. O overlay de login deve fechar.
 
 // Função de Logout (Sair)
 async function fazerLogout() {
