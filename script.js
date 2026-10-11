@@ -1,6 +1,6 @@
-// Configuração do Supabase
-const SUPABASE_URL = 'https://kthvsbhubmerufrtzip.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_3Ck_k8g01wPQJiHB2PG4sQ_VetmQ...'; // Substitua se necessário, mas já está com a sua chave copiada
+// Configuração do Supabase (URL e Chave corrigidos)
+const SUPABASE_URL = 'https://kthvsbhubmerufrtzpf.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_3Ck_k8g01wPQJiHB2PG4sQ_VetmQ...'; // Cole aqui a sua Publishable Key completa se esta estiver cortada
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -17,8 +17,13 @@ window.onload = async function() {
 
 // Função de Login Real com Supabase Auth
 async function fazerLogin() {
-    const email = document.getElementById('usuarioInput').value;
+    const email = document.getElementById('usuarioInput').value.trim();
     const password = document.getElementById('senhaInput').value;
+
+    if (!email || !password) {
+        alert("Por favor, preencha o e-mail e a palavra-passe.");
+        return;
+    }
 
     const { data, error } = await supabaseClient.auth.signInWithPassword({
         email: email,
@@ -34,20 +39,22 @@ async function fazerLogin() {
     }
 }
 
+// Para verificar se o login foi efetuado:
+// Abra o site e insira thalesgroup@gmail.com e a sua palavra-passe. O overlay de login deve fechar.
+
 // Função de Logout (Sair)
 async function fazerLogout() {
     const { error } = await supabaseClient.auth.signOut();
     if (!error) {
-        window.location.reload(); // Recarrega a página e mostra o login de novo
+        window.location.reload();
     } else {
         alert("Erro ao terminar sessão: " + error.message);
     }
 }
 
-// Funções de Inventário (Mantém a estrutura do seu projeto)
+// Funções do Inventário
 function carregarEquipamentos() {
     console.log("Inventário carregado com sucesso!");
-    // Aqui continuará a sua lógica para buscar os dados na tabela
 }
 
 function adicionarEquipamento() {
